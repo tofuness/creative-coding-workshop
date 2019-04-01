@@ -1,3 +1,5 @@
+// Noise library
+// Original author https://twitter.com/etiennejcb/status/912105839107952643
 // https://github.com/blindman67/SimplexNoiseJS
 
 const seed = Date.now();
@@ -14,8 +16,8 @@ let t = 0;
 function setup() {
   const canvas = createCanvas(600, 600);
   canvas.parent('#content');
-
   pixelDensity(1.0);
+
   class Particle {
     constructor() {
       this.r = Math.sqrt(random(1)) * radius;
@@ -29,7 +31,7 @@ function setup() {
           // We map from 0, radius -> 1, 0 — Further our means less intensity!
           map(dist(this.x, this.y, width / 2, height / 2), 0, radius, 1, 0),
           0.75
-        ) * 150;
+        ) * 200;
 
       const x =
         this.x +
@@ -45,7 +47,7 @@ function setup() {
         this.y +
         intensity *
           openSimplex.noise4D(
-            20 + scl * this.x,
+            100 + scl * this.x,
             scl * this.y,
             R * Math.cos(TWO_PI * t),
             R * Math.sin(TWO_PI * t)
@@ -57,13 +59,13 @@ function setup() {
     }
   }
 
-  for (var i = 0; i < 4000; i++) {
+  for (var i = 0; i < 5000; i++) {
     particles.push(new Particle());
   }
 }
 
 function draw() {
   background(0);
-  t += 0.0034;
+  t += 0.003;
   particles.forEach(p => p.update(t));
 }
